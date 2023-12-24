@@ -44,21 +44,21 @@
         "documentation": {}
     },
     {
-        "label": "rasterio.sample",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "rasterio.sample",
-        "description": "rasterio.sample",
-        "detail": "rasterio.sample",
-        "documentation": {}
-    },
-    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "rasterio.sample",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "rasterio.sample",
+        "description": "rasterio.sample",
+        "detail": "rasterio.sample",
         "documentation": {}
     },
     {
@@ -70,11 +70,21 @@
         "documentation": {}
     },
     {
-        "label": "pprint",
-        "importPath": "pprint",
-        "description": "pprint",
+        "label": "folium",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "pprint",
+        "importPath": "folium",
+        "description": "folium",
+        "detail": "folium",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
         "documentation": {}
     },
     {
@@ -95,11 +105,35 @@
         "documentation": {}
     },
     {
+        "label": "BioclimService",
+        "importPath": "smd.bioclim.bioclim_service",
+        "description": "smd.bioclim.bioclim_service",
+        "isExtraImport": true,
+        "detail": "smd.bioclim.bioclim_service",
+        "documentation": {}
+    },
+    {
         "label": "busca_especie_no_gbif",
         "importPath": "smd.gbif.gbif_service",
         "description": "smd.gbif.gbif_service",
         "isExtraImport": true,
         "detail": "smd.gbif.gbif_service",
+        "documentation": {}
+    },
+    {
+        "label": "FileWriter",
+        "importPath": "smd.view.file_writer",
+        "description": "smd.view.file_writer",
+        "isExtraImport": true,
+        "detail": "smd.view.file_writer",
+        "documentation": {}
+    },
+    {
+        "label": "MapBuilder",
+        "importPath": "smd.view.map_builder",
+        "description": "smd.view.map_builder",
+        "isExtraImport": true,
+        "detail": "smd.view.map_builder",
         "documentation": {}
     },
     {
@@ -188,7 +222,7 @@
         "kind": 6,
         "importPath": "smd.bioclim.bioclim_service",
         "description": "smd.bioclim.bioclim_service",
-        "peekOfCode": "class BioclimService:\n    def reproject_coords(self, src_crs, dst_crs, coords):\n        xs = [c[0] for c in coords]\n        ys = [c[1] for c in coords]\n        xs, ys = fiona.transform.transform(src_crs, dst_crs, xs, ys)\n        return [[x, y] for x, y in zip(xs, ys)]\n    def layer_path(self, layer):\n        return f\"../data/bioclim/bioclim_{layer}.tif\"\n    def load_bioclimate_values(self, coords=[]):\n        results = [{\"lon\": coord[0], \"lat\": coord[1]} for coord in coords]",
+        "peekOfCode": "class BioclimService:\n    def reproject_coords(self, dataset, coords):\n        src_crs = \"EPSG:4326\"\n        dst_crs = dataset.crs.to_epsg()\n        xs = [c[0] for c in coords]\n        ys = [c[1] for c in coords]\n        xs, ys = fiona.transform.transform(src_crs, dst_crs, xs, ys)\n        return [[x, y] for x, y in zip(xs, ys)]\n    def layer_path(self, layer):\n        return f\"bioclim/data/wc2.1_5m_bio_{layer+1}.tif\"",
         "detail": "smd.bioclim.bioclim_service",
         "documentation": {}
     },
@@ -211,11 +245,29 @@
         "documentation": {}
     },
     {
+        "label": "FileWriter",
+        "kind": 6,
+        "importPath": "smd.view.file_writer",
+        "description": "smd.view.file_writer",
+        "peekOfCode": "class FileWriter:\n    def __init__(self) -> None:\n        self.save_funcs = {\n            \"csv\": self.save_csv,\n            \"json\": self.save_json,\n            \"xlsx\": self.save_xlsx,\n        }\n    def write(self, df: pd.DataFrame, format: str, output: str):\n        self.save_funcs[format](df, output)\n    def save_csv(self, df: pd.DataFrame, output: str):",
+        "detail": "smd.view.file_writer",
+        "documentation": {}
+    },
+    {
+        "label": "MapBuilder",
+        "kind": 6,
+        "importPath": "smd.view.map_builder",
+        "description": "smd.view.map_builder",
+        "peekOfCode": "class MapBuilder:\n    def build(self, dataframe: pd.DataFrame) -> folium.Map:\n        mapa = folium.Map(\n            location=[\n                dataframe[\"lat\"].mean(),\n                dataframe[\"lon\"].mean(),\n            ],\n            zoom_start=5,\n        )\n        # Adicionar marcadores para cada ponto no DataFrame",
+        "detail": "smd.view.map_builder",
+        "documentation": {}
+    },
+    {
         "label": "load_specie",
         "kind": 2,
         "importPath": "smd.load_specie",
         "description": "smd.load_specie",
-        "peekOfCode": "def load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option(prompt=True)],\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    occurrences = busca_especie_no_gbif(specie)\n    occurrences.to_csv(output, index=False)\n    pprint(occurrences)\nif __name__ == \"__main__\":\n    app()",
+        "peekOfCode": "def load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    now = time.time()\n    occurrences = busca_especie_no_gbif(specie)\n    occurrences = BioclimService().augment_data_with_bioclimate(occurrences)",
         "detail": "smd.load_specie",
         "documentation": {}
     },
@@ -224,7 +276,7 @@
         "kind": 5,
         "importPath": "smd.load_specie",
         "description": "smd.load_specie",
-        "peekOfCode": "app = typer.Typer()\n# coords é um anotated typer Options que é uma lista de listas de floats\n# https://typer.tiangolo.com/tutorial/options/annotated/\n@app.command()\ndef load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option(prompt=True)],\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    occurrences = busca_especie_no_gbif(specie)",
+        "peekOfCode": "app = typer.Typer()\n# coords é um anotated typer Options que é uma lista de listas de floats\n# https://typer.tiangolo.com/tutorial/options/annotated/\n@app.command()\ndef load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):",
         "detail": "smd.load_specie",
         "documentation": {}
     }
