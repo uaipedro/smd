@@ -97,6 +97,30 @@
         "documentation": {}
     },
     {
+        "label": "Progress",
+        "importPath": "rich.progress",
+        "description": "rich.progress",
+        "isExtraImport": true,
+        "detail": "rich.progress",
+        "documentation": {}
+    },
+    {
+        "label": "SpinnerColumn",
+        "importPath": "rich.progress",
+        "description": "rich.progress",
+        "isExtraImport": true,
+        "detail": "rich.progress",
+        "documentation": {}
+    },
+    {
+        "label": "TextColumn",
+        "importPath": "rich.progress",
+        "description": "rich.progress",
+        "isExtraImport": true,
+        "detail": "rich.progress",
+        "documentation": {}
+    },
+    {
         "label": "Annotated",
         "importPath": "typing_extensions",
         "description": "typing_extensions",
@@ -267,7 +291,7 @@
         "kind": 2,
         "importPath": "smd.load_specie",
         "description": "smd.load_specie",
-        "peekOfCode": "def load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    now = time.time()\n    occurrences = busca_especie_no_gbif(specie)\n    occurrences = BioclimService().augment_data_with_bioclimate(occurrences)",
+        "peekOfCode": "def load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    now = time.time()\n    with Progress(\n        SpinnerColumn(),",
         "detail": "smd.load_specie",
         "documentation": {}
     },
