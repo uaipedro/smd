@@ -17,7 +17,8 @@ def busca_especie_no_gbif(nome_cientifico, size=100):
     ]
 
     complete = []
-    for page in range(int(size / 300) + 1):
+    page = 0
+    while True:
         results = occ.search(
             scientificName=nome_cientifico,
             limit=300,
@@ -26,6 +27,9 @@ def busca_especie_no_gbif(nome_cientifico, size=100):
             country="BR",
         ).get("results")
         complete = [*complete, *results]
+        if len(results) < 300:
+            break
+        page += 1
 
     df = pd.DataFrame(complete)
 

@@ -12,9 +12,14 @@ app = typer.Typer()
 
 
 @app.command()
-def load_specie(specie: Annotated[str, typer.Argument()]):
+def load_specie(
+    specie: Annotated[str, typer.Argument()],
+    output: Annotated[str, typer.Option(prompt=True)],
+):
     typer.echo(f"Loading specie from gbif: {specie}")
     occurrences = busca_especie_no_gbif(specie)
+
+    occurrences.to_csv(output, index=False)
     pprint(occurrences)
 
 
