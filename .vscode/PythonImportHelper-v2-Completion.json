@@ -1,0 +1,231 @@
+[
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "fiona.transform",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "fiona.transform",
+        "description": "fiona.transform",
+        "detail": "fiona.transform",
+        "documentation": {}
+    },
+    {
+        "label": "rasterio.sample",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "rasterio.sample",
+        "description": "rasterio.sample",
+        "detail": "rasterio.sample",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "occurrences",
+        "importPath": "pygbif",
+        "description": "pygbif",
+        "isExtraImport": true,
+        "detail": "pygbif",
+        "documentation": {}
+    },
+    {
+        "label": "pprint",
+        "importPath": "pprint",
+        "description": "pprint",
+        "isExtraImport": true,
+        "detail": "pprint",
+        "documentation": {}
+    },
+    {
+        "label": "typer",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "typer",
+        "description": "typer",
+        "detail": "typer",
+        "documentation": {}
+    },
+    {
+        "label": "Annotated",
+        "importPath": "typing_extensions",
+        "description": "typing_extensions",
+        "isExtraImport": true,
+        "detail": "typing_extensions",
+        "documentation": {}
+    },
+    {
+        "label": "busca_especie_no_gbif",
+        "importPath": "smd.gbif.gbif_service",
+        "description": "smd.gbif.gbif_service",
+        "isExtraImport": true,
+        "detail": "smd.gbif.gbif_service",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"bin\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"smd-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "base = bin_dir[: -len(\"bin\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"smd-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"smd-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"smd-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"smd-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"../lib/python3.10/site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "BioclimService",
+        "kind": 6,
+        "importPath": "smd.bioclim.bioclim_service",
+        "description": "smd.bioclim.bioclim_service",
+        "peekOfCode": "class BioclimService:\n    def reproject_coords(self, src_crs, dst_crs, coords):\n        xs = [c[0] for c in coords]\n        ys = [c[1] for c in coords]\n        xs, ys = fiona.transform.transform(src_crs, dst_crs, xs, ys)\n        return [[x, y] for x, y in zip(xs, ys)]\n    def layer_path(self, layer):\n        return f\"../data/bioclim/bioclim_{layer}.tif\"\n    def load_bioclimate_values(self, coords=[]):\n        results = [{\"lon\": coord[0], \"lat\": coord[1]} for coord in coords]",
+        "detail": "smd.bioclim.bioclim_service",
+        "documentation": {}
+    },
+    {
+        "label": "BIOCLIM_LAYERS",
+        "kind": 5,
+        "importPath": "smd.bioclim.bioclim_service",
+        "description": "smd.bioclim.bioclim_service",
+        "peekOfCode": "BIOCLIM_LAYERS = [\n    (\"BIO1\", \"Annual Mean Temperature\"),\n    (\"BIO2\", \"Mean Diurnal Range (Mean of monthly (max temp - min temp))\"),\n    (\"BIO3\", \"Isothermality (BIO2/BIO7) (×100)\"),\n    (\"BIO4\", \"Temperature Seasonality (standard deviation ×100)\"),\n    (\"BIO5\", \"Max Temperature of Warmest Month\"),\n    (\"BIO6\", \"Min Temperature of Coldest Month\"),\n    (\"BIO7\", \"Temperature Annual Range (BIO5-BIO6)\"),\n    (\"BIO8\", \"Mean Temperature of Wettest Quarter\"),\n    (\"BIO9\", \"Mean Temperature of Driest Quarter\"),",
+        "detail": "smd.bioclim.bioclim_service",
+        "documentation": {}
+    },
+    {
+        "label": "busca_especie_no_gbif",
+        "kind": 2,
+        "importPath": "smd.gbif.gbif_service",
+        "description": "smd.gbif.gbif_service",
+        "peekOfCode": "def busca_especie_no_gbif(nome_cientifico, size=100):\n    infos_interesse = [\n        \"taxonKey\",\n        \"genus\",\n        \"species\",\n        \"decimalLatitude\",\n        \"decimalLongitude\",\n        \"country\",\n        \"coordinateUncertaintyInMeters\",\n        \"year\",",
+        "detail": "smd.gbif.gbif_service",
+        "documentation": {}
+    },
+    {
+        "label": "load_specie",
+        "kind": 2,
+        "importPath": "smd.load_specie",
+        "description": "smd.load_specie",
+        "peekOfCode": "def load_specie(specie: Annotated[str, typer.Argument()]):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    occurrences = busca_especie_no_gbif(specie)\n    pprint(occurrences)\nif __name__ == \"__main__\":\n    app()",
+        "detail": "smd.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "smd.load_specie",
+        "description": "smd.load_specie",
+        "peekOfCode": "app = typer.Typer()\n# coords é um anotated typer Options que é uma lista de listas de floats\n# https://typer.tiangolo.com/tutorial/options/annotated/\n@app.command()\ndef load_specie(specie: Annotated[str, typer.Argument()]):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    occurrences = busca_especie_no_gbif(specie)\n    pprint(occurrences)\nif __name__ == \"__main__\":\n    app()",
+        "detail": "smd.load_specie",
+        "documentation": {}
+    }
+]
