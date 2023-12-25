@@ -70,6 +70,23 @@
         "documentation": {}
     },
     {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "stats",
+        "importPath": "scipy",
+        "description": "scipy",
+        "isExtraImport": true,
+        "detail": "scipy",
+        "documentation": {}
+    },
+    {
         "label": "Progress",
         "importPath": "rich.progress",
         "description": "rich.progress",
@@ -169,6 +186,14 @@
         "documentation": {}
     },
     {
+        "label": "remove_outliers",
+        "importPath": "src.utils.stats_helper",
+        "description": "src.utils.stats_helper",
+        "isExtraImport": true,
+        "detail": "src.utils.stats_helper",
+        "documentation": {}
+    },
+    {
         "label": "with_progress",
         "importPath": "src.utils.with_progress",
         "description": "src.utils.with_progress",
@@ -190,6 +215,14 @@
         "description": "src.view.map_builder",
         "isExtraImport": true,
         "detail": "src.view.map_builder",
+        "documentation": {}
+    },
+    {
+        "label": "ReportBuilder",
+        "importPath": "src.view.report_builder",
+        "description": "src.view.report_builder",
+        "isExtraImport": true,
+        "detail": "src.view.report_builder",
         "documentation": {}
     },
     {
@@ -319,6 +352,15 @@
         "documentation": {}
     },
     {
+        "label": "remove_outliers",
+        "kind": 2,
+        "importPath": "src.utils.stats_helper",
+        "description": "src.utils.stats_helper",
+        "peekOfCode": "def remove_outliers(df, columns, z_threshold=3):\n    # Seleciona apenas as colunas desejadas\n    subset_df = df[columns]\n    # Calcule o Z-Score para cada ponto de dados nas colunas selecionadas\n    z_scores = np.abs(stats.zscore(subset_df))\n    # Defina um limite para considerar os pontos como outliers\n    df_without_outliers = df[(z_scores < z_threshold).all(axis=1)]\n    return df_without_outliers",
+        "detail": "src.utils.stats_helper",
+        "documentation": {}
+    },
+    {
         "label": "with_progress",
         "kind": 2,
         "importPath": "src.utils.with_progress",
@@ -355,11 +397,20 @@
         "documentation": {}
     },
     {
+        "label": "ReportBuilder",
+        "kind": 6,
+        "importPath": "src.view.report_builder",
+        "description": "src.view.report_builder",
+        "peekOfCode": "class ReportBuilder:\n    def build(self, df: pd.DataFrame):\n        return df.describe().transpose()\n    def print(self, df: pd.DataFrame):\n        print(self.build(df))",
+        "detail": "src.view.report_builder",
+        "documentation": {}
+    },
+    {
         "label": "load_specie",
         "kind": 2,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "def load_specie(\n    specie: StrArg,\n    output_format: StrOpt = \"xlsx\",\n    save_map: BoolOpt = False,\n):\n    path = file_path_from_specie(specie)\n    ocorrencias = enriquece(busca(specie))\n    salva_dados(ocorrencias, output_format, path)\n    if save_map:\n        cria_mapa(ocorrencias, path)",
+        "peekOfCode": "def load_specie(\n    specie: StrArg,\n    output_format: StrOpt = \"xlsx\",\n    save_map: BoolOpt = False,\n    verbose: BoolOpt = False,\n    drop_empty: BoolOpt = False,\n    drop_outliners: BoolOpt = False,\n):\n    path = file_path_from_specie(specie)\n    ocorrencias = busca(specie)",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -368,7 +419,7 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "app = typer.Typer()\nbusca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]",
+        "peekOfCode": "app = typer.Typer()\nbusca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\ncria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -377,7 +428,7 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "busca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"",
+        "peekOfCode": "busca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\ncria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -386,7 +437,7 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "enriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.",
+        "peekOfCode": "enriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\ncria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -395,7 +446,7 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "salva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".",
+        "peekOfCode": "salva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\ncria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -404,7 +455,25 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "cria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.",
+        "peekOfCode": "cria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\ncria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "cria_relatorio",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "cria_relatorio = with_progress(ReportBuilder().build, \"Criando relatório\")\nimprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "imprime_relatorio",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "imprime_relatorio = with_progress(ReportBuilder().print, \"Imprimindo relatório\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.",
         "detail": "src.load_specie",
         "documentation": {}
     },

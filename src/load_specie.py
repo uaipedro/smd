@@ -4,9 +4,11 @@ from typing_extensions import Annotated
 from src.bioclim.bioclim_service import BioclimService
 from src.gbif.gbif_service import busca_especie_no_gbif
 from src.utils.file_helper import file_path_from_specie
+from src.utils.stats_helper import remove_outliers
 from src.utils.with_progress import with_progress
 from src.view.file_writer import FileWriter
 from src.view.map_builder import MapBuilder
+from src.view.report_builder import ReportBuilder
 
 app = typer.Typer()
 
@@ -16,7 +18,8 @@ enriquece = with_progress(
 )
 salva_dados = with_progress(FileWriter().write, "Salvando dados")
 cria_mapa = with_progress(MapBuilder().build, "Criando mapa")
-
+cria_relatorio = with_progress(ReportBuilder().build, "Criando relatório")
+imprime_relatorio = with_progress(ReportBuilder().print, "Imprimindo relatório")
 
 StrArg = Annotated[str, typer.Argument()]
 StrOpt = Annotated[str, typer.Option()]
@@ -37,13 +40,31 @@ def load_specie(
     specie: StrArg,
     output_format: StrOpt = "xlsx",
     save_map: BoolOpt = False,
+    verbose: BoolOpt = False,
+    drop_empty: BoolOpt = False,
+    drop_outliners: BoolOpt = False,
 ):
     path = file_path_from_specie(specie)
-    ocorrencias = enriquece(busca(specie))
-    salva_dados(ocorrencias, output_format, path)
+
+    ocorrencias = busca(specie)
+
+    ocorrencias_ricas = enriquece(ocorrencias)
+
+    if drop_empty:
+        ocorrencias_ricas.dropna(inplace=True)
+
+    if drop_outliners:
+        ocorrencias_ricas = remove_outliers(
+            ocorrencias_ricas, [f"BIO{i+1}" for i in range(19)]
+        )
+
+    salva_dados(ocorrencias_ricas, output_format, path)
 
     if save_map:
-        cria_mapa(ocorrencias, path)
+        cria_mapa(ocorrencias_ricas, path)
+
+    if verbose:
+        imprime_relatorio(ocorrencias_ricas)
 
 
 if __name__ == "__main__":
