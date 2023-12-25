@@ -1,2 +1,2 @@
-smd/data/*
+src/data/*
 **/__pycache__/**
