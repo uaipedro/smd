@@ -1,7 +1,7 @@
 import typer
 from typing_extensions import Annotated
 
-from src.bioclim.bioclim_service import BioclimService
+from src.bioclim.bioclim_service import BIOCLIM_LAYERS, BioclimService
 from src.gbif.gbif_service import busca_especie_no_gbif
 from src.utils.file_helper import file_path_from_specie
 from src.utils.stats_helper import remove_outliers
@@ -20,6 +20,9 @@ salva_dados = with_progress(FileWriter().write, "Salvando dados")
 cria_mapa = with_progress(MapBuilder().build, "Criando mapa")
 cria_relatorio = with_progress(ReportBuilder().build, "Criando relatório")
 imprime_relatorio = with_progress(ReportBuilder().print, "Imprimindo relatório")
+traduz_camadas = with_progress(
+    BioclimService().translate_layers_inplace, "Traduzindo camadas"
+)
 
 StrArg = Annotated[str, typer.Argument()]
 StrOpt = Annotated[str, typer.Option()]
@@ -43,6 +46,7 @@ def load_specie(
     verbose: BoolOpt = False,
     drop_empty: BoolOpt = False,
     drop_outliners: BoolOpt = False,
+    layer_pt_br: BoolOpt = False,
 ):
     path = file_path_from_specie(specie)
 
@@ -58,13 +62,16 @@ def load_specie(
             ocorrencias_ricas, [f"BIO{i+1}" for i in range(19)]
         )
 
-    salva_dados(ocorrencias_ricas, output_format, path)
+    if layer_pt_br:
+        traduz_camadas(ocorrencias_ricas)
 
     if save_map:
         cria_mapa(ocorrencias_ricas, path)
 
     if verbose:
         imprime_relatorio(ocorrencias_ricas)
+
+    salva_dados(ocorrencias_ricas, output_format, path)
 
 
 if __name__ == "__main__":
