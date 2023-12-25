@@ -1,5 +1,7 @@
 import pandas as pd
 
+from src.utils.file_helper import get_output_path
+
 
 class FileWriter:
     def __init__(self) -> None:
@@ -13,10 +15,10 @@ class FileWriter:
         self.save_funcs[format](df, output)
 
     def save_csv(self, df: pd.DataFrame, output: str):
-        df.to_csv(f"data/{output}.csv", index=False)
+        df.to_csv(get_output_path(output, "csv"), index=False)
 
     def save_json(self, df: pd.DataFrame, output: str):
-        df.to_json(f"data/{output}.json", orient="records")
+        df.to_json(get_output_path(output, "json"), orient="records")
 
     def save_xlsx(self, df: pd.DataFrame, output: str):
-        df.to_excel(f"data/{output}.xlsx", index=False)
+        df.to_excel(get_output_path(output, "xlsx"), index=False)

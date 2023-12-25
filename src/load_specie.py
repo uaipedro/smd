@@ -1,58 +1,49 @@
-import time
-
 import typer
-from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing_extensions import Annotated
 
 from src.bioclim.bioclim_service import BioclimService
 from src.gbif.gbif_service import busca_especie_no_gbif
+from src.utils.file_helper import file_path_from_specie
+from src.utils.with_progress import with_progress
 from src.view.file_writer import FileWriter
 from src.view.map_builder import MapBuilder
 
 app = typer.Typer()
 
-# coords é um anotated typer Options que é uma lista de listas de floats
-# https://typer.tiangolo.com/tutorial/options/annotated/
+busca = with_progress(busca_especie_no_gbif, "Buscando ocorrências no GBIF")
+enriquece = with_progress(
+    BioclimService().augment_data_with_bioclimate, "Enriquecendo dados com bioclima"
+)
+salva_dados = with_progress(FileWriter().write, "Salvando dados")
+cria_mapa = with_progress(MapBuilder().build, "Criando mapa")
+
+
+StrArg = Annotated[str, typer.Argument()]
+StrOpt = Annotated[str, typer.Option()]
+BoolOpt = Annotated[bool, typer.Option()]
+
+"""
+    Load species data from GBIF and enrich it with bioclimatic data.
+
+    Args:
+        specie (str): The name of the species to load.
+        output_format (str, optional): The format to save the data in. Defaults to "xlsx".
+        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.
+"""
 
 
 @app.command()
 def load_specie(
-    specie: Annotated[str, typer.Argument()],
-    output: Annotated[str, typer.Option()] = "output",
-    output_format: Annotated[str, typer.Option()] = "xlsx",
-    save_map: Annotated[bool, typer.Option()] = False,
+    specie: StrArg,
+    output_format: StrOpt = "xlsx",
+    save_map: BoolOpt = False,
 ):
-    typer.echo(f"Loading specie from gbif: {specie}")
-    now = time.time()
+    path = file_path_from_specie(specie)
+    ocorrencias = enriquece(busca(specie))
+    salva_dados(ocorrencias, output_format, path)
 
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        transient=True,
-    ) as progress:
-        progress.add_task("Loading specie from gbif", total=None)
-        occurrences = busca_especie_no_gbif(specie)
-
-        progress.add_task("Augmenting data with bioclim", total=None)
-        occurrences = BioclimService().augment_data_with_bioclimate(occurrences)
-        progress.stop()
-
-        if output == "output":
-            output = specie.replace(" ", "_")
-
-        fw = FileWriter()
-
-        typer.echo(f"Finished loading specie {specie} in {time.time() - now} seconds")
-
-        fw.write(occurrences, output_format, output)
-
-        if save_map:
-            mapa = MapBuilder().build(occurrences)
-            mapa.save(f"data/{output}_ocurrences_map.html")
-
-            typer.echo(
-                f'{len(occurrences)} occurrences saved in "data/{output}.{output_format}"'
-            )
+    if save_map:
+        cria_mapa(ocorrencias, path)
 
 
 if __name__ == "__main__":

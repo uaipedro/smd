@@ -70,33 +70,6 @@
         "documentation": {}
     },
     {
-        "label": "folium",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "folium",
-        "description": "folium",
-        "detail": "folium",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "typer",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "typer",
-        "description": "typer",
-        "detail": "typer",
-        "documentation": {}
-    },
-    {
         "label": "Progress",
         "importPath": "rich.progress",
         "description": "rich.progress",
@@ -121,6 +94,49 @@
         "documentation": {}
     },
     {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "get_output_path",
+        "importPath": "src.utils.file_helper",
+        "description": "src.utils.file_helper",
+        "isExtraImport": true,
+        "detail": "src.utils.file_helper",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_from_specie",
+        "importPath": "src.utils.file_helper",
+        "description": "src.utils.file_helper",
+        "isExtraImport": true,
+        "detail": "src.utils.file_helper",
+        "documentation": {}
+    },
+    {
+        "label": "folium",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "folium",
+        "description": "folium",
+        "detail": "folium",
+        "documentation": {}
+    },
+    {
+        "label": "typer",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "typer",
+        "description": "typer",
+        "detail": "typer",
+        "documentation": {}
+    },
+    {
         "label": "Annotated",
         "importPath": "typing_extensions",
         "description": "typing_extensions",
@@ -142,6 +158,14 @@
         "description": "src.gbif.gbif_service",
         "isExtraImport": true,
         "detail": "src.gbif.gbif_service",
+        "documentation": {}
+    },
+    {
+        "label": "with_progress",
+        "importPath": "src.utils.with_progress",
+        "description": "src.utils.with_progress",
+        "isExtraImport": true,
+        "detail": "src.utils.with_progress",
         "documentation": {}
     },
     {
@@ -269,6 +293,42 @@
         "documentation": {}
     },
     {
+        "label": "file_path_from_specie",
+        "kind": 2,
+        "importPath": "src.utils.file_helper",
+        "description": "src.utils.file_helper",
+        "peekOfCode": "def file_path_from_specie(specie: str) -> str:\n    return f\"{specie.lower().replace(' ', '_')}.xlsx\"\ndef get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:",
+        "detail": "src.utils.file_helper",
+        "documentation": {}
+    },
+    {
+        "label": "get_output_path",
+        "kind": 2,
+        "importPath": "src.utils.file_helper",
+        "description": "src.utils.file_helper",
+        "peekOfCode": "def get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:\n        filename = f\"{filename}.{format}\"\n    return os.path.join(foldername, filename)",
+        "detail": "src.utils.file_helper",
+        "documentation": {}
+    },
+    {
+        "label": "with_progress",
+        "kind": 2,
+        "importPath": "src.utils.with_progress",
+        "description": "src.utils.with_progress",
+        "peekOfCode": "def with_progress(func, description=\"loading...\"):\n    def wrapper(*args, **kwargs):\n        with Progress(\n            SpinnerColumn(),\n            TextColumn(\"[progress.description]{task.description}\"),\n            transient=True,\n        ) as progress:\n            progress.add_task(description, total=None)\n            result = func(*args, **kwargs)\n            progress.stop()",
+        "detail": "src.utils.with_progress",
+        "documentation": {}
+    },
+    {
+        "label": "with_timer",
+        "kind": 2,
+        "importPath": "src.utils.with_timer",
+        "description": "src.utils.with_timer",
+        "peekOfCode": "def with_timer(func):\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time() - start\n        print(f\"Function {func.__name__} took {end:.4f} seconds\")\n        return result\n    return wrapper",
+        "detail": "src.utils.with_timer",
+        "documentation": {}
+    },
+    {
         "label": "FileWriter",
         "kind": 6,
         "importPath": "src.view.file_writer",
@@ -282,7 +342,7 @@
         "kind": 6,
         "importPath": "src.view.map_builder",
         "description": "src.view.map_builder",
-        "peekOfCode": "class MapBuilder:\n    def build(self, dataframe: pd.DataFrame) -> folium.Map:\n        mapa = folium.Map(\n            location=[\n                dataframe[\"lat\"].mean(),\n                dataframe[\"lon\"].mean(),\n            ],\n            zoom_start=5,\n        )\n        # Adicionar marcadores para cada ponto no DataFrame",
+        "peekOfCode": "class MapBuilder:\n    def build(self, dataframe: pd.DataFrame, output: str = None) -> folium.Map:\n        mapa = folium.Map(\n            location=[\n                dataframe[\"lat\"].mean(),\n                dataframe[\"lon\"].mean(),\n            ],\n            zoom_start=5,\n        )\n        # Adicionar marcadores para cada ponto no DataFrame",
         "detail": "src.view.map_builder",
         "documentation": {}
     },
@@ -291,7 +351,7 @@
         "kind": 2,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "def load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):\n    typer.echo(f\"Loading specie from gbif: {specie}\")\n    now = time.time()\n    with Progress(\n        SpinnerColumn(),",
+        "peekOfCode": "def load_specie(\n    specie: StrArg,\n    output_format: StrOpt = \"xlsx\",\n    save_map: BoolOpt = False,\n):\n    path = file_path_from_specie(specie)\n    ocorrencias = enriquece(busca(specie))\n    salva_dados(ocorrencias, output_format, path)\n    if save_map:\n        cria_mapa(ocorrencias, path)",
         "detail": "src.load_specie",
         "documentation": {}
     },
@@ -300,7 +360,70 @@
         "kind": 5,
         "importPath": "src.load_specie",
         "description": "src.load_specie",
-        "peekOfCode": "app = typer.Typer()\n# coords é um anotated typer Options que é uma lista de listas de floats\n# https://typer.tiangolo.com/tutorial/options/annotated/\n@app.command()\ndef load_specie(\n    specie: Annotated[str, typer.Argument()],\n    output: Annotated[str, typer.Option()] = \"output\",\n    output_format: Annotated[str, typer.Option()] = \"xlsx\",\n    save_map: Annotated[bool, typer.Option()] = False,\n):",
+        "peekOfCode": "app = typer.Typer()\nbusca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "busca",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "busca = with_progress(busca_especie_no_gbif, \"Buscando ocorrências no GBIF\")\nenriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "enriquece",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "enriquece = with_progress(\n    BioclimService().augment_data_with_bioclimate, \"Enriquecendo dados com bioclima\"\n)\nsalva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "salva_dados",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "salva_dados = with_progress(FileWriter().write, \"Salvando dados\")\ncria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "cria_mapa",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "cria_mapa = with_progress(MapBuilder().build, \"Criando mapa\")\nStrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "StrArg",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "StrArg = Annotated[str, typer.Argument()]\nStrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.\n\"\"\"",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "StrOpt",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "StrOpt = Annotated[str, typer.Option()]\nBoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.\n\"\"\"\n@app.command()",
+        "detail": "src.load_specie",
+        "documentation": {}
+    },
+    {
+        "label": "BoolOpt",
+        "kind": 5,
+        "importPath": "src.load_specie",
+        "description": "src.load_specie",
+        "peekOfCode": "BoolOpt = Annotated[bool, typer.Option()]\n\"\"\"\n    Load species data from GBIF and enrich it with bioclimatic data.\n    Args:\n        specie (str): The name of the species to load.\n        output_format (str, optional): The format to save the data in. Defaults to \"xlsx\".\n        save_map (bool, optional): Whether to save a map of the species occurrences. Defaults to False.\n\"\"\"\n@app.command()\ndef load_specie(",
         "detail": "src.load_specie",
         "documentation": {}
     }
