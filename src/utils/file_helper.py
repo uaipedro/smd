@@ -6,7 +6,7 @@ def file_path_from_specie(specie: str) -> str:
 
 
 def get_output_path(filename: str, format="") -> str:
-    foldername = "output"
+    foldername = "../output"
     # Verifica se a pasta existe
     if not os.path.exists(foldername):
         # Se não existe, cria a pasta

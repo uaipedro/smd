@@ -1,6 +1,8 @@
 import folium
 import pandas as pd
 
+from src.utils.file_helper import get_output_path
+
 
 class MapBuilder:
     def build(self, dataframe: pd.DataFrame, output: str = None) -> folium.Map:
@@ -17,6 +19,6 @@ class MapBuilder:
             folium.Marker(location=[row["lat"], row["lon"]]).add_to(mapa)
 
         if output:
-            mapa.save(f"output/{output}.html")
+            mapa.save(get_output_path(output, "html"))
 
         return mapa

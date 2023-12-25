@@ -111,6 +111,14 @@
         "documentation": {}
     },
     {
+        "label": "get_output_path",
+        "importPath": "src.utils.file_helper",
+        "description": "src.utils.file_helper",
+        "isExtraImport": true,
+        "detail": "src.utils.file_helper",
+        "documentation": {}
+    },
+    {
         "label": "file_path_from_specie",
         "importPath": "src.utils.file_helper",
         "description": "src.utils.file_helper",
@@ -297,7 +305,7 @@
         "kind": 2,
         "importPath": "src.utils.file_helper",
         "description": "src.utils.file_helper",
-        "peekOfCode": "def file_path_from_specie(specie: str) -> str:\n    return f\"{specie.lower().replace(' ', '_')}.xlsx\"\ndef get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:",
+        "peekOfCode": "def file_path_from_specie(specie: str) -> str:\n    return f\"{specie.lower().replace(' ', '_')}.xlsx\"\ndef get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"../output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:",
         "detail": "src.utils.file_helper",
         "documentation": {}
     },
@@ -306,7 +314,7 @@
         "kind": 2,
         "importPath": "src.utils.file_helper",
         "description": "src.utils.file_helper",
-        "peekOfCode": "def get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:\n        filename = f\"{filename}.{format}\"\n    return os.path.join(foldername, filename)",
+        "peekOfCode": "def get_output_path(filename: str, format=\"\") -> str:\n    foldername = \"../output\"\n    # Verifica se a pasta existe\n    if not os.path.exists(foldername):\n        # Se não existe, cria a pasta\n        os.makedirs(foldername)\n        print(f\"A pasta {foldername} foi criada.\")\n    if format:\n        filename = f\"{filename}.{format}\"\n    return os.path.join(foldername, filename)",
         "detail": "src.utils.file_helper",
         "documentation": {}
     },
