@@ -2,7 +2,7 @@ import pandas as pd
 from pygbif import occurrences as occ
 
 
-def busca_especie_no_gbif(nome_cientifico, size=100):
+def busca_especie_no_gbif(nome_cientifico, country=None, size=100):
     infos_interesse = [
         "taxonKey",
         "genus",
@@ -10,10 +10,10 @@ def busca_especie_no_gbif(nome_cientifico, size=100):
         "decimalLatitude",
         "decimalLongitude",
         "country",
-        "coordinateUncertaintyInMeters",
+        # "coordinateUncertaintyInMeters",
         "year",
-        "month",
-        "day",
+        # "month",
+        # "day",
     ]
 
     complete = []
@@ -24,7 +24,7 @@ def busca_especie_no_gbif(nome_cientifico, size=100):
             limit=300,
             offset=300 * page,
             hasCoordinate=True,
-            country="BR",
+            country=country,
         ).get("results")
         complete = [*complete, *results]
         if len(results) < 300:

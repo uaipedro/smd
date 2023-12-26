@@ -39,39 +39,48 @@ BoolOpt = Annotated[bool, typer.Option()]
 
 
 @app.command()
-def load_specie(
+def info():
+    """Show information about this CLI"""
+    print(
+        "This CLI was developed to make it easier to load species data from GBIF and enrich it with bioclimatic data."
+    )
+
+
+@app.command()
+def load(
     specie: StrArg,
     output_format: StrOpt = "xlsx",
     save_map: BoolOpt = False,
     verbose: BoolOpt = False,
     drop_empty: BoolOpt = False,
     drop_outliners: BoolOpt = False,
-    layer_pt_br: BoolOpt = False,
+    pt_br: BoolOpt = False,
+    br_only: BoolOpt = False,
 ):
-    path = file_path_from_specie(specie)
-
-    ocorrencias = busca(specie)
+    nome_arquivo = file_path_from_specie(specie)
+    country = "BR" if br_only else None
+    ocorrencias = busca(specie, country=country)
 
     ocorrencias_ricas = enriquece(ocorrencias)
 
     if drop_empty:
-        ocorrencias_ricas.dropna(inplace=True)
+        ocorrencias_ricas = ocorrencias_ricas[ocorrencias_ricas["year"].notna()]
 
     if drop_outliners:
         ocorrencias_ricas = remove_outliers(
             ocorrencias_ricas, [f"BIO{i+1}" for i in range(19)]
         )
 
-    if layer_pt_br:
+    if pt_br:
         traduz_camadas(ocorrencias_ricas)
 
     if save_map:
-        cria_mapa(ocorrencias_ricas, path)
+        cria_mapa(ocorrencias_ricas, nome_arquivo)
 
     if verbose:
         imprime_relatorio(ocorrencias_ricas)
 
-    salva_dados(ocorrencias_ricas, output_format, path)
+    salva_dados(ocorrencias_ricas, output_format, nome_arquivo)
 
 
 if __name__ == "__main__":

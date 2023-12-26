@@ -2,7 +2,7 @@ import os
 
 
 def file_path_from_specie(specie: str) -> str:
-    return f"{specie.lower().replace(' ', '_')}.xlsx"
+    return f"{specie.lower().replace(' ', '_')}"
 
 
 def get_output_path(filename: str, format="") -> str:
