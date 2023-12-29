@@ -15,14 +15,24 @@ def busca_especie_no_gbif(nome_cientifico, country=None, size=100):
         "year",
     ]
 
+    def count_pages():
+        return occ.search(
+            scientificName=nome_cientifico,
+            limit=1,
+            hasCoordinate=True,
+            country=country,
+        ).get("count")
+
     complete = []
-    pages = 10
-    limit = 300
+    pages = count_pages() // size
+    page_size = 300
+
+    print("páginas:", pages)
 
     def search_page(offset):
         results = occ.search(
             scientificName=nome_cientifico,
-            limit=limit,
+            limit=page_size,
             offset=offset,
             hasCoordinate=True,
             country=country,
@@ -31,7 +41,9 @@ def busca_especie_no_gbif(nome_cientifico, country=None, size=100):
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Mapeie a função de busca para todas as páginas em paralelo
-        all_results = executor.map(search_page, range(0, limit * pages, limit))
+        all_results = executor.map(
+            search_page, range(0, page_size * pages - 1, page_size)
+        )
 
     # Combine os resultados de todas as páginas
     complete = [result for results in all_results for result in results]

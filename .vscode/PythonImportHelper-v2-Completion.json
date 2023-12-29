@@ -179,14 +179,6 @@
         "documentation": {}
     },
     {
-        "label": "BIOCLIM_LAYERS",
-        "importPath": "src.bioclim.bioclim_service",
-        "description": "src.bioclim.bioclim_service",
-        "isExtraImport": true,
-        "detail": "src.bioclim.bioclim_service",
-        "documentation": {}
-    },
-    {
         "label": "BioclimService",
         "importPath": "src.bioclim.bioclim_service",
         "description": "src.bioclim.bioclim_service",

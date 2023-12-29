@@ -1,7 +1,7 @@
 import typer
 from typing_extensions import Annotated
 
-from src.bioclim.bioclim_service import BIOCLIM_LAYERS, BioclimService
+from src.bioclim.bioclim_service import BioclimService
 from src.gbif.gbif_service import busca_especie_no_gbif
 from src.utils.file_helper import file_path_from_specie
 from src.utils.stats_helper import remove_outliers
