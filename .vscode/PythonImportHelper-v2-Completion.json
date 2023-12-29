@@ -428,7 +428,7 @@
         "kind": 2,
         "importPath": "src.species",
         "description": "src.species",
-        "peekOfCode": "def load(\n    specie: StrArg,\n    output_format: StrOpt = \"xlsx\",\n    save_map: BoolOpt = False,\n    verbose: BoolOpt = False,\n    drop_empty: BoolOpt = False,\n    drop_outliners: BoolOpt = False,\n    pt_br: BoolOpt = False,\n    br_only: BoolOpt = False,\n):",
+        "peekOfCode": "def load(\n    specie: StrArg,\n    output_format: StrOpt = \"xlsx\",\n    save_map: BoolOpt = False,\n    describe: BoolOpt = False,\n    drop_empty: BoolOpt = False,\n    drop_outliners: BoolOpt = False,\n    pt_br: BoolOpt = False,\n    br_only: BoolOpt = False,\n):",
         "detail": "src.species",
         "documentation": {}
     },

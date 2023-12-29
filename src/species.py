@@ -51,7 +51,7 @@ def load(
     specie: StrArg,
     output_format: StrOpt = "xlsx",
     save_map: BoolOpt = False,
-    verbose: BoolOpt = False,
+    describe: BoolOpt = False,
     drop_empty: BoolOpt = False,
     drop_outliners: BoolOpt = False,
     pt_br: BoolOpt = False,
@@ -77,7 +77,7 @@ def load(
     if save_map:
         cria_mapa(ocorrencias_ricas, nome_arquivo)
 
-    if verbose:
+    if describe:
         imprime_relatorio(ocorrencias_ricas)
 
     salva_dados(ocorrencias_ricas, output_format, nome_arquivo)
